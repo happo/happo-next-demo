@@ -1,7 +1,9 @@
+import Button from '../src/Button.js';
+
 export default function Index() {
   return (
     <div>
-      <p>Hello Next.js</p>
+      <Button>Test</Button>
     </div>
   );
 }
