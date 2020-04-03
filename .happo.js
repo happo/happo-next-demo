@@ -12,6 +12,8 @@ module.exports = {
     chrome: new RemoteBrowserTarget('chrome', { viewport: '600x400' }),
   },
 
+  setupScript: path.resolve(__dirname, 'happoSetup.js'),
+
   customizeWebpackConfig: async config => {
     const base = await nextWebpackConfig(__dirname, {
       config: {
@@ -27,7 +29,7 @@ module.exports = {
     config.plugins = base.plugins;
     config.resolve = base.resolve;
     config.resolveLoader = base.resolveLoader;
-    Object.keys(config.resolve.alias).forEach((key) => {
+    Object.keys(config.resolve.alias).forEach(key => {
       if (!config.resolve.alias[key]) {
         delete config.resolve.alias[key];
       }

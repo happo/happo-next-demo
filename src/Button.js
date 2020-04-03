@@ -12,5 +12,10 @@ const Wrapper = styled.button`
 export default ({ children }) => (
   <Wrapper>
     <span className="Button__label">Hello World!</span>
+    <style jsx>{`
+      .Button__label {
+        font-family: monospace;
+      }
+    `}</style>
   </Wrapper>
 );
