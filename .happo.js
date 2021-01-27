@@ -2,6 +2,7 @@ const path = require('path');
 
 const { RemoteBrowserTarget } = require('happo.io');
 
+const { findPagesDir } = require('next/dist/lib/find-pages-dir');
 const nextWebpackConfig = require('next/dist/build/webpack-config').default;
 const nextConfig = require('./next.config');
 
@@ -19,12 +20,16 @@ module.exports = {
       config: {
         devIndicators: {},
         distDir: happoTmpDir,
+        env: {},
         experimental: { plugins: [] },
         future: {},
-        env: {},
+        pageExtensions: [],
+        sassOptions: {},
         ...nextConfig,
       },
       entrypoints: {},
+      pagesDir: findPagesDir(process.cwd()),
+      rewrites: [],
     });
     config.plugins = base.plugins;
     config.resolve = base.resolve;
