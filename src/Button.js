@@ -9,13 +9,13 @@ const Wrapper = styled.button`
   border: 1px solid red;
 `;
 
-export default ({ children }) => (
-  <Wrapper>
-    <span className="Button__label">Hello World!</span>
-    <style jsx>{`
-      .Button__label {
-        font-family: monospace;
-      }
-    `}</style>
-  </Wrapper>
-);
+const Button = ({ children }) => <Wrapper>
+  <span className="Button__label">Hello World!</span>
+  <style jsx>{`
+    .Button__label {
+      font-family: monospace;
+    }
+  `}</style>
+</Wrapper>;
+
+export default Button;
