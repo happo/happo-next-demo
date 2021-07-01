@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import './Button.css';
+import styles from './Button.module.css';
 
 // Create a Wrapper component that'll render a <section> tag with some styles
 const Wrapper = styled.button`
@@ -10,7 +10,7 @@ const Wrapper = styled.button`
 `;
 
 const Button = ({ children }) => <Wrapper>
-  <span className="Button__label">Hello World!</span>
+  <span className={`${styles.label} Button__label`}>Hello World!</span>
   <style jsx>{`
     .Button__label {
       font-family: monospace;

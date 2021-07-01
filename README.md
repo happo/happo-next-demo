@@ -20,8 +20,9 @@ npm install --save-dev babel-loader
 
 ## Configure `.happo.js`:
 
-The main thing to take care of here is to tell Happo about the webpack
-configuration used by Next.JS.
+The two main things we need to take care of:
+- Make Happo use the same webpack config as Next.js
+- Inject the custom webpack instance used by Next.js to Happo
 
 ```js
 const path = require('path');
@@ -30,9 +31,11 @@ const { RemoteBrowserTarget } = require('happo.io');
 
 const { findPagesDir } = require('next/dist/lib/find-pages-dir');
 const nextWebpackConfig = require('next/dist/build/webpack-config').default;
-const nextConfig = require('./next.config');
+const loadNextConfig = require('next/dist/next-server/server/config').default;
 
 const happoTmpDir = './happo-tmp';
+const webpack = require('next/dist/compiled/webpack/webpack');
+webpack.init(true);
 
 module.exports = {
   targets: {
@@ -42,21 +45,13 @@ module.exports = {
   setupScript: path.resolve(__dirname, 'happoSetup.js'),
 
   customizeWebpackConfig: async config => {
-    // Grab required webpack settings from the Next.JS webpack config.
+    const nextConfig = await loadNextConfig('production', __dirname, null);
+
     const base = await nextWebpackConfig(__dirname, {
-      config: {
-        devIndicators: {},
-        distDir: happoTmpDir,
-        env: {},
-        experimental: { plugins: [] },
-        future: {},
-        pageExtensions: [],
-        sassOptions: {},
-        ...nextConfig,
-      },
+      config: nextConfig,
       entrypoints: {},
       pagesDir: findPagesDir(process.cwd()),
-      rewrites: [],
+      rewrites: { beforeFiles: [], afterFiles: [], fallback:[] },
     });
     config.plugins = base.plugins;
     config.resolve = base.resolve;
@@ -70,9 +65,10 @@ module.exports = {
     return config;
   },
 
+  webpack: webpack.webpack,
+
   // Happo is unable to resolve some imports if the tmpdir isn't located inside
   // the project structure. The default is an OS provided folder, `os.tmpdir()`.
-  // You can add this folder to `.gitignore` as well.
   tmpdir: path.join(__dirname, happoTmpDir),
 };
 
