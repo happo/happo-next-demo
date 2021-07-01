@@ -11,6 +11,13 @@ Unless you have already done it.
 npm install --save-dev happo.io
 ```
 
+You might need to install babel-loader as well, if that's not already part of
+the dependency tree:
+
+```sh
+npm install --save-dev babel-loader
+```
+
 ## Configure `.happo.js`:
 
 The main thing to take care of here is to tell Happo about the webpack
@@ -103,7 +110,7 @@ export default () => <Button>Click me</Button>;
 ## Run happo!
 
 ```bash
-yarn happo run
+npm run happo run
 ```
 
 
