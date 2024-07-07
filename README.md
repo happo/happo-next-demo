@@ -1,3 +1,8 @@
+
+> [!WARNING]
+> This repository hasn't been updated in a while. Look into docs.happo.io for more up-to-date documentation. 
+
+
 # happo-next-demo
 
 This repository demonstrates how you can use [Happo
